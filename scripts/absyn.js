@@ -167,7 +167,7 @@ function createListExp(list) {
 function isListExp(e) { 
     return e[0] === "List"; 
 }
-function getListExp(e) { 
+function getListValue(e) { 
     if (isListExp(e)) {
         return e[1];
     } else {
@@ -175,6 +175,8 @@ function getListExp(e) {
                         "argument of isListExp is not a ListExp.");
     }
 }
+
+
 
 
 
@@ -210,7 +212,7 @@ exports.getPrimAppExpPrim2 = getPrimAppExpPrim2;
 exports.getPrimAppExpArgs2 = getPrimAppExpArgs2;
 exports.createListExp =  createListExp;
 exports.isListExp =  isListExp;
-exports.getListExp =  getListExp;
+exports.getListValue =  getListValue;
 
 window.SLang.absyn = exports;
 }());

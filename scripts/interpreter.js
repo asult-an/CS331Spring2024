@@ -1,14 +1,9 @@
 /* global SLang : true, parser */
 
+
 (function () {
 
     "use strict";
-    var fp = require('./fp');
-
-    if ( ! exports ) {
-        var exports = [ ];
-     }
-    
 
     var A = window.SLang.absyn;
     var E = window.SLang.env;
@@ -90,6 +85,9 @@ function evalExp(exp,envir) {
     console.log("evalExp", exp, envir);
     if (A.isIntExp(exp)) {
         return E.createNum(A.getIntExpValue(exp));
+    }
+    else if (A.isListExp(exp)) {
+        return E.createList(A.getListValue(exp));
     }
     else if (A.isVarExp(exp)) {
         return E.lookup(envir,A.getVarExpId(exp));
