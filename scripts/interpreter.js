@@ -1,14 +1,7 @@
-/* global SLang : true, parser */
 
 (function () {
 
     "use strict";
-    var fp = require('./fp');
-
-    if ( ! exports ) {
-        var exports = [ ];
-     }
-    
 
     var A = window.SLang.absyn;
     var E = window.SLang.env;

@@ -65,14 +65,14 @@ intlit_exp
     ;
 
 list_exp
-    : LBRACKET RBRACKET { $$ = [ ];}
-    | LBRACKET INT list RBRACKET
+    : LBRACKET list_element RBRACKET
             { $$ = SLang.absyn.createListExp($2); }
     ;
 
-list
+list_element
     : /* empty */ {$$ = [ ]; }
-    | COMMA INT list { var result;
+    | INT more_list_elements
+            { var result;
           if ($2 === [ ])
              result = [ $1 ];
           else {
@@ -81,6 +81,12 @@ list
           }
           $$ = result;
         }
+    ;
+more_list_elements
+    : /* empty */ {$$ = [ ]; }
+    | COMMA INT more_list_elements 
+        { $3.unshift($2); 
+         $$ = $3; }
     ;
 
 fn_exp
