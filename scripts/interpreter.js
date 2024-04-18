@@ -43,6 +43,9 @@ function applyPrimitive(prim,args) {
     case "/": 
         typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
         return E.createNum( E.getNumValue(args[0]) / E.getNumValue(args[1]));
+    case "%": 
+        typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
+        return E.createNum( E.getNumValue(args[0]) % E.getNumValue(args[1]));
     case "add1": 
         typeCheckPrimitiveOp(prim,args,[E.isNum]);
         return E.createNum( 1 + E.getNumValue(args[0]) );
