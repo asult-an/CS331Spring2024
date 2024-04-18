@@ -19,6 +19,10 @@ LETTER                [a-zA-Z]
 "%"                                   { return 'REMAINDER'; }
 "add1"                                { return 'ADD1'; }
 "~"                                   { return 'NEG'; }
+">"                                   { return 'GT'; }
+"<"                                   { return 'LT'; }
+"==="                                 { return 'EQUALS'; }
+"not"                                 { return 'NOT'; }
 ","                                   { return 'COMMA'; }
 "=>"                                  { return 'THATRETURNS'; }
 <<EOF>>                               { return 'EOF'; }
@@ -95,6 +99,7 @@ prim_app_exp
 unary_prim_op
     :  NEG     { $$ = $1; }
     |  ADD1     { $$ = $1; }
+    |  NOT     { $$ = $1; }
     ;
 
 binary_prim_op
@@ -103,6 +108,9 @@ binary_prim_op
     |  MINUS     { $$ = $1; }
     |  DIVIDE     { $$ = $1; }
     |  REMAINDER  { $$ = $1; }
+    |  GT  { $$ = $1; }
+    |  LT  { $$ = $1; }
+    |  EQUALS  { $$ = $1; }
     ;
 
 args

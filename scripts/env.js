@@ -23,6 +23,20 @@ function getNumValue(value) {
                         "The argument of getNumValue is not a Num value.");
     }
 }
+function createBool(n) {
+    return ["Bool",n];
+}
+function isBool(value) {
+    return value[0] === "Bool";
+}
+function getBoolValue(value) {
+    if (isBool(value)) {
+        return value[1];
+    } else {
+        throw new Error("Interpreter error: "  +
+                        "The argument of getBoolValue is not a Bool value.");
+    }
+}
 function createClo(params,body,env) {
     return ["Clo",params,body,env];
 }
@@ -121,6 +135,9 @@ function toString(e) {
 exports.createNum = createNum;
 exports.isNum = isNum;
 exports.getNumValue = getNumValue;
+exports.createBool = createBool;
+exports.isBool = isBool;
+exports.getBoolValue = getBoolValue;
 exports.createClo = createClo;
 exports.isClo = isClo;
 exports.getCloParams = getCloParams;
