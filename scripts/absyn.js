@@ -161,6 +161,24 @@ function getPrimAppExpArgs2(e) {
     }
 }
 
+function createListExp(list) {
+    return ["List",list];
+}
+function isListExp(e) { 
+    return e[0] === "List"; 
+}
+function getListExp(e) { 
+    if (isListExp(e)) {
+        return e[1];
+    } else {
+        throw new Error("Interpreter error: The "  +
+                        "argument of isListExp is not a ListExp.");
+    }
+}
+
+
+
+
 exports.createProgram = createProgram;
 exports.isProgram = isProgram;
 exports.getProgramExp = getProgramExp;
@@ -190,6 +208,9 @@ exports.createPrimAppExp2 = createPrimAppExp2;
 exports.isPrimAppExp2 = isPrimAppExp2;
 exports.getPrimAppExpPrim2 = getPrimAppExpPrim2;
 exports.getPrimAppExpArgs2 = getPrimAppExpArgs2;
+exports.createListExp =  createListExp;
+exports.isListExp =  isListExp;
+exports.getListExp =  getListExp;
 
 window.SLang.absyn = exports;
 }());

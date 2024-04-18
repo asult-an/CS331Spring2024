@@ -68,6 +68,21 @@ function getCloEnv(value) {
     }
 }
 
+function createList(n) {
+    return ["List",n];
+}
+function isList(value) {
+    return value[0] === "List";
+}
+function getListValue(value) {
+    if (isList(value)) {
+        return value[1];
+    } else {
+        throw new Error("Interpreter error: "  +
+                        "The argument of getListValue is not a List value.");
+    }
+}
+
 // implementation of the environment
 
 // data constructors
@@ -154,6 +169,9 @@ exports.lookup = lookup;
 exports.update = update;
 exports.initEnv = initEnv;
 exports.toString = toString;
+exports.getListValue = getListValue;
+exports.createList = createList;
+exports.isList = isList;
 
 window.SLang.env = exports;
 

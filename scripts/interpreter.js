@@ -3,6 +3,12 @@
 (function () {
 
     "use strict";
+    var fp = require('./fp');
+
+    if ( ! exports ) {
+        var exports = [ ];
+     }
+    
 
     var A = window.SLang.absyn;
     var E = window.SLang.env;
@@ -55,6 +61,9 @@ function applyPrimitive(prim,args) {
     case "===": 
         typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
         return E.createBool( E.getNumValue(args[0]) === E.getNumValue(args[1]));
+    case "::":
+        typeCheckPrimitiveOp(prim,args,[E.isNum,E.isList]);
+        return E.createList( fp.cons(E.getNumValue(args[0]), E.getListValue(args[1])));
     case "add1": 
         typeCheckPrimitiveOp(prim,args,[E.isNum]);
         return E.createNum( 1 + E.getNumValue(args[0]) );
@@ -64,6 +73,17 @@ function applyPrimitive(prim,args) {
     case "not": 
         typeCheckPrimitiveOp(prim,args,[E.isBool]);
         return E.createBool(!E.getBoolValue(args[0]));
+    case "hd": 
+        typeCheckPrimitiveOp(prim,args,[E.isList]);
+        return E.createNum(fp.hd(E.getListValue(args[0])));
+    case "tl": 
+        typeCheckPrimitiveOp(prim,args,[E.isList]);
+        return E.createList(fp.tl(E.getListValue(args[0])));
+    case "isNull": 
+        typeCheckPrimitiveOp(prim,args,[E.isList]);
+        return E.createBool(fp.isNull(E.getListValue(args[0])));
+
+
     }
 }
 function evalExp(exp,envir) {

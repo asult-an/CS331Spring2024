@@ -23,6 +23,12 @@ LETTER                [a-zA-Z]
 "<"                                   { return 'LT'; }
 "==="                                 { return 'EQUALS'; }
 "not"                                 { return 'NOT'; }
+"["                                   { return 'LBRACKET' ; }
+"]"                                   { return 'RBRACKET' ; }
+"hd"                                  { return 'HD'; }
+"tl"                                  { return 'TL'; }
+"isNull"                              { return 'ISNULL'; }
+"::"                                  { return 'CONS' ; }
 ","                                   { return 'COMMA'; }
 "=>"                                  { return 'THATRETURNS'; }
 <<EOF>>                               { return 'EOF'; }
@@ -44,6 +50,7 @@ program
 exp
     : var_exp       { $$ = $1; }
     | intlit_exp    { $$ = $1; }
+    | list_exp      { $$ = $1; }
     | fn_exp        { $$ = $1; }
     | app_exp       { $$ = $1; }    
     | prim_app_exp  { $$ = $1; }
@@ -55,6 +62,25 @@ var_exp
 
 intlit_exp
     : INT  { $$ =SLang.absyn.createIntExp( $1 ); }
+    ;
+
+list_exp
+    : LBRACKET RBRACKET { $$ = [ ];}
+    | LBRACKET INT list RBRACKET
+            { $$ = SLang.absyn.createListExp($2); }
+    ;
+
+list
+    : /* empty */ {$$ = [ ]; }
+    | COMMA INT list { var result;
+          if ($2 === [ ])
+             result = [ $1 ];
+          else {
+             $2.unshift($1);
+             result = $2;
+          }
+          $$ = result;
+        }
     ;
 
 fn_exp
@@ -100,6 +126,9 @@ unary_prim_op
     :  NEG     { $$ = $1; }
     |  ADD1     { $$ = $1; }
     |  NOT     { $$ = $1; }
+    |  TL      { $$ = $1; }
+    |  HD      { $$ = $1 ;}
+    |  ISNULL      { $$ = $1 ;}
     ;
 
 binary_prim_op
@@ -111,6 +140,7 @@ binary_prim_op
     |  GT  { $$ = $1; }
     |  LT  { $$ = $1; }
     |  EQUALS  { $$ = $1; }
+    |  CONS    { $$ = $1;}
     ;
 
 args
