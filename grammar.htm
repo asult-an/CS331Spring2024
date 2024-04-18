@@ -1,0 +1,58 @@
+<html>
+<head>
+  <title>SLang 1 Grammar</title>
+    <script type="text/javascript"
+	    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+   </script>
+   <style>
+   .box {
+        text-align: center;
+        font-weight: bold;
+        font-size: large;
+        background-color: #ACF;
+        margin-bottom: 30px;
+        margin-top: 20px;
+        padding: 5px;
+   }
+   </style>
+</head>
+<body>
+<div class="box">Phrase structure grammar</div>
+
+
+\(
+    \begin{array}{lcl}
+       < program > & ::= & < exp > \\
+       < exp >     & ::= &  < var\_exp > \\
+                   &  |  & < fn\_exp > \\
+                   &  |  & < app\_exp > \\
+                   &  |  & < intlit\_exp > \\
+                   &  |  & < papp\_exp > \\
+       < fn\_exp >  & ::= & fn\quad '('\quad  (  < var\_exp >\   (\ ','\  < var\_exp >  )^*\  )? \quad ')'\ =>\  < exp > \\
+       < app\_exp >  & ::= & '('\  < exp >\   < exp >^*\ ')' \\
+       < papp\_exp > & ::= & < prim\_op >\  '('\  < args >\  ')' \\
+       < args >      & ::= & (  < exp >\   (\ ','\  < exp >  )^*\  )?\\
+
+    \end{array}
+\)
+
+
+</pre>
+
+<div class="box">Lexical grammar</div>
+
+\(
+    \begin{array}{lcl}
+ < var\_exp >    & ::=  & < letter >\  (\ < letter >\ |\ < digit >\ |\ \ \_\ \ )^*\\
+
+ < intlit\_exp > & ::=  & < digit >^+\\
+
+ < digit >       & ::=  & 0\ |\ 1\ |\ 2\ |\ ...\ |\ 8\ |\ 9\\
+
+ < letter >      & ::=  & a\ |\ b\ |\ ...\ |\ z\ |\ A\ |\ B\ |\ ...\ |\ Z\\
+
+ < prim\_op >    & ::=  & +\ |\ *\ |\ add1\\
+\end{array}
+\)
+</body>
+</html>
