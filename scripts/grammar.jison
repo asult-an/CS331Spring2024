@@ -12,6 +12,7 @@ LETTER                [a-zA-Z]
 "fn"                                  { return 'FN'; }
 "("                                   { return 'LPAREN'; }
 ")"                                   { return 'RPAREN'; }
+"->"                                  { return 'FILTER' ; }
 "+"                                   { return 'PLUS'; }
 "*"                                   { return 'TIMES'; }
 "-"                                   { return 'MINUS'; }
@@ -147,6 +148,7 @@ binary_prim_op
     |  LT  { $$ = $1; }
     |  EQUALS  { $$ = $1; }
     |  CONS    { $$ = $1;}
+    |  FILTER    { $$ = $1;}
     ;
 
 args

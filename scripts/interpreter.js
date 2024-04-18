@@ -28,6 +28,14 @@ function typeCheckPrimitiveOp(op,args,typeCheckerFunctions) {
         }
     }
 }
+function applyFilter(clo, list) {
+    let predicate = 0;
+    return applyFilterHelper(predicate, list);
+}
+
+function applyFilterHelper(pred, list) {
+    return ;//fp.filter(pred, list); 
+}
 
 function applyPrimitive(prim,args) {
     switch (prim) {
@@ -58,6 +66,9 @@ function applyPrimitive(prim,args) {
     case "::":
         typeCheckPrimitiveOp(prim,args,[E.isNum,E.isList]);
         return E.createList( fp.cons(E.getNumValue(args[0]), E.getListValue(args[1])));
+    case "->":
+        typeCheckPrimitiveOp(prim,args,[E.isClo,E.isList]);
+        return E.createList( applyFilter(args[0], E.getListValue(args[1])));
     case "add1": 
         typeCheckPrimitiveOp(prim,args,[E.isNum]);
         return E.createNum( 1 + E.getNumValue(args[0]) );
@@ -81,7 +92,7 @@ function applyPrimitive(prim,args) {
     }
 }
 function evalExp(exp,envir) {
-    console.log("evalExp", exp, envir);
+    console.log("evalExp", exp[0], envir);
     if (A.isIntExp(exp)) {
         return E.createNum(A.getIntExpValue(exp));
     }
