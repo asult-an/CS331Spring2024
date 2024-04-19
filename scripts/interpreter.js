@@ -28,14 +28,59 @@ function typeCheckPrimitiveOp(op,args,typeCheckerFunctions) {
         }
     }
 }
+
 function applyFilter(clo, list) {
-    let predicate = 0;
-    return applyFilterHelper(predicate, list);
+
+    function evalPredicate(clo) {
+        let value;
+
+        if (clo[2][2][0] != "IntExp" && clo[2][3][0] != "IntExp") {
+            for( let i = 0; i < clo[3][1].length; ++i) {
+                if (clo[3][1][i][1][0] === "Num")
+                    value = clo[3][1][i][1][1];   
+            }
+            
+        }
+        else {
+            value = (clo[2][2][0] == "IntExp") ? value = clo[2][2][1] : value = clo[2][3][1];
+        }
+        let flipArgs = clo[1][0] === clo[2][3][1];
+        if (flipArgs) {
+            switch (clo[2][1]) {
+                case ">":
+                    return function(x) {return value > x; }
+                case "<":
+                    return function(x) {return value < x; }
+                case "===":
+                    return function(x) {return value === x; }
+                default:
+                    throw "Predicate operator invalid.";
+            }
+        }
+        else {
+            switch (clo[2][1]) {
+                case ">":
+                    return function(x) {return x > value; }
+                case "<":
+                    return function(x) {return x < value; }
+                case "===":
+                    return function(x) {return x === value; }
+                default:
+                    throw "Predicate operator invalid.";
+            }
+        }
+        
+    }
+    if (clo[2][1] != ">" && clo[2][1] != "<" && clo[2][1] != "===")
+        throw "Error: The first argument of \’->\’ is not a predicate.";
+    
+    if (!fp.isList(list))
+        throw "Error: The second argument of \’->\’ has the wrong type.";    
+
+    return fp.filter(evalPredicate(clo), list);
 }
 
-function applyFilterHelper(pred, list) {
-    return ;//fp.filter(pred, list); 
-}
+
 
 function applyPrimitive(prim,args) {
     switch (prim) {
@@ -68,7 +113,7 @@ function applyPrimitive(prim,args) {
         return E.createList( fp.cons(E.getNumValue(args[0]), E.getListValue(args[1])));
     case "->":
         typeCheckPrimitiveOp(prim,args,[E.isClo,E.isList]);
-        return E.createList( applyFilter(args[0], E.getListValue(args[1])));
+        return E.createList(applyFilter(args[0], E.getListValue(args[1])));
     case "add1": 
         typeCheckPrimitiveOp(prim,args,[E.isNum]);
         return E.createNum( 1 + E.getNumValue(args[0]) );
@@ -92,7 +137,6 @@ function applyPrimitive(prim,args) {
     }
 }
 function evalExp(exp,envir) {
-    console.log("evalExp", exp[0], envir);
     if (A.isIntExp(exp)) {
         return E.createNum(A.getIntExpValue(exp));
     }
@@ -133,7 +177,6 @@ function evalExp(exp,envir) {
                                                            function(arg) { 
                                   return evalExp(arg,envir); } ));
     } else {
-        console.log(exp, envir);
         throw "Error: Attempting to evaluate an invalid expression";
         
     }

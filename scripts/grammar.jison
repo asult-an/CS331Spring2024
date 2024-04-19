@@ -75,9 +75,9 @@ list_element
     | INT more_list_elements
             { var result;
           if ($2 === [ ])
-             result = [ $1 ];
+             result = [ parseInt($1) ];
           else {
-             $2.unshift($1);
+             $2.unshift(parseInt($1));
              result = $2;
           }
           $$ = result;
@@ -86,7 +86,7 @@ list_element
 more_list_elements
     : /* empty */ {$$ = [ ]; }
     | COMMA INT more_list_elements 
-        { $3.unshift($2); 
+        { $3.unshift(parseInt($2)); 
          $$ = $3; }
     ;
 

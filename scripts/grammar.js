@@ -101,7 +101,28 @@ break;
 case 11: case 13:
 this.$ = [ ]; 
 break;
-case 12: case 17: case 40:
+case 12:
+ var result;
+          if ($$[$0] === [ ])
+             result = [ parseInt($$[$0-1]) ];
+          else {
+             $$[$0].unshift(parseInt($$[$0-1]));
+             result = $$[$0];
+          }
+          this.$ = result;
+        
+break;
+case 14:
+ $$[$0].unshift(parseInt($$[$0-1])); 
+         this.$ = $$[$0]; 
+break;
+case 15:
+ this.$ = SLang.absyn.createFnExp($$[$0-3],$$[$0]); 
+break;
+case 16: case 39: case 41:
+ this.$ = [ ]; 
+break;
+case 17: case 40:
  var result;
           if ($$[$0] === [ ])
              result = [ $$[$0-1] ];
@@ -112,18 +133,12 @@ case 12: case 17: case 40:
           this.$ = result;
         
 break;
-case 14: case 19:
- $$[$0].unshift($$[$0-1]); 
-         this.$ = $$[$0]; 
-break;
-case 15:
- this.$ = SLang.absyn.createFnExp($$[$0-3],$$[$0]); 
-break;
-case 16: case 39: case 41:
- this.$ = [ ]; 
-break;
 case 18:
  this.$ = [ ] 
+break;
+case 19:
+ $$[$0].unshift($$[$0-1]); 
+         this.$ = $$[$0]; 
 break;
 case 20:
   $$[$0-1].unshift("args");
